@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uber_rider/utils/colors.dart';
 import 'package:uber_rider/views/dasboard_view.dart';
+import 'package:uber_rider/views/driver/driver_dashboard.dart';
 import 'package:uber_rider/widgets/button.dart';
 import 'package:uber_rider/widgets/gaps.dart';
 
@@ -32,12 +33,46 @@ class RegisterView extends StatelessWidget {
               textField(
                   controller: controller.lnameController.value,
                   hint: 'Last Name'),
+              h20,
+              Row(
+                children: [
+                  Expanded(
+                      child: button(
+                          rad: 100,
+                          text: 'Passenger',
+                          backColor:
+                              controller.selectedType.value == 'Passenger'
+                                  ? primary
+                                  : bg,
+                          textColor:
+                              controller.selectedType.value == 'Passenger'
+                                  ? bg
+                                  : primary,
+                          onTap: () {
+                            controller.selectType('Passenger');
+                          })),
+                  w10,
+                  Expanded(
+                      child: button(
+                          rad: 100,
+                          text: 'Driver',
+                          backColor: controller.selectedType.value == 'Driver'
+                              ? primary
+                              : bg,
+                          textColor: controller.selectedType.value == 'Driver'
+                              ? bg
+                              : primary,
+                          onTap: () {
+                            controller.selectType('Driver');
+                          })),
+                ],
+              ),
               h30,
               button(
                   text: 'Register',
                   onTap: () {
                     if (controller.regKey.currentState!.validate()) {
-                      Get.offAll(() => DasboardView());
+                      controller.register();
                     }
                   })
             ],

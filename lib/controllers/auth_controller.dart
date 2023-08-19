@@ -1,6 +1,8 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uber_rider/views/dasboard_view.dart';
+import 'package:uber_rider/views/driver/driver_dashboard.dart';
 import 'package:uber_rider/views/otp_verify_view.dart';
 
 import '../utils/colors.dart';
@@ -20,6 +22,7 @@ class AuthController extends GetxController {
   Rx<TextEditingController> otp5 = TextEditingController().obs;
   Rx<TextEditingController> otp6 = TextEditingController().obs;
   final GlobalKey<FormState> regKey = GlobalKey<FormState>();
+  RxString selectedType = 'Passenger'.obs;
 
   login() {
     if (phoneController.value.text.isNotEmpty) {
@@ -72,5 +75,18 @@ class AuthController extends GetxController {
           phoneCode.value = '+${country.phoneCode}';
           update();
         });
+  }
+
+  selectType(String type) {
+    selectedType.value = type;
+    update();
+  }
+
+  register() {
+    if (selectedType.value == 'Passenger') {
+      Get.offAll(() => DasboardView());
+    } else {
+      Get.offAll(() => DriverDashboardView());
+    }
   }
 }
